@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "expenses",
+  "info": {
+    "singularName": "expense",
+    "pluralName": "expenses",
+    "displayName": "Expense",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Expense": {
+      "type": "integer"
+    },
+    "expense_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::expense-type.expense-type"
+    }
+  }
+}
