@@ -1,6 +1,5 @@
 <template>
-  <div class="cardDiv">
-    <v-table height="30vh">
+    <v-table>
       <thead>
         <tr>
           <th class="text-left">Type</th>
@@ -18,7 +17,6 @@
         </tr>
       </tbody>
     </v-table>
-  </div>
 </template>
 
 <script>
@@ -49,6 +47,5 @@ export default {
 </script>
 
 <style lang="sass">
-.cardDiv
-    width: 20%
+
 </style>

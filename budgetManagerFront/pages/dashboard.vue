@@ -14,6 +14,7 @@
   <div class="cardsDiv">
     <add-expense></add-expense>
     <display-expenses></display-expenses>
+    <chart-card></chart-card>
   </div>
 </template>
 
@@ -21,28 +22,19 @@
 import draggable from "vuedraggable";
 import addExpense from "../component/cards/add-expense.vue";
 import displayExpenses from "../component/cards/display-expenses.vue";
+import chartCard from "../component/cards/chart-card.vue";
+import store from "../store/index";
 
 export default {
   components: {
     draggable,
     addExpense,
-    displayExpenses
+    displayExpenses,
+    chartCard
   },
   data: () => {
     return {
       drag: false,
-      items: [
-        { name: "CHART" },
-        { name: "NOTIFICATION" },
-        { name: "test4" },
-        { name: "test5" },
-      ],
-      moro: [
-        { name: "moro" },
-        { name: "NFICATION" },
-        { name: "tet4" },
-        { name: "tt5" },
-      ],
     };
   },
 };
@@ -56,5 +48,5 @@ export default {
 .cardsDiv
   display: flex
   flex-direction: row
-  justify-content: space-evenly
+  margin-top: 5%
 </style>

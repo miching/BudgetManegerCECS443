@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import { numericLiteral } from "@babel/types";
 import serviceApi from "../../service/Api";
+import store from '../../store/index';
 export default {
   data: () => {
     return {
@@ -51,8 +51,6 @@ export default {
     },
 
     submitExpense() {
-      console.log(this.expenseTypeSelected);
-      console.log(this.ExpenseNumber);
       this.expenseType.forEach((item) => {
         if (this.expenseTypeSelected === item.attributes.ExpenseType) {
           serviceApi.post("/api/expenses", {
@@ -67,6 +65,9 @@ export default {
   },
   mounted() {
     this.getExpenseType();
+    console.log("avant", store.state.expenseType)
+    store.state.expenseType =  this.expenseTypeName;
+    console.log("apres", store.state.expenseType)
   },
 };
 </script>
