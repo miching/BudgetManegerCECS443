@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-02-22T00:06:40.354Z"
+    "x-generation-date": "2023-02-23T11:02:42.089Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -8509,6 +8509,7 @@
                                             }
                                           }
                                         },
+                                        "userExpense": {},
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -9072,6 +9073,7 @@
                                             }
                                           }
                                         },
+                                        "userExpense": {},
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -9668,6 +9670,7 @@
                                             }
                                           }
                                         },
+                                        "userExpense": {},
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -10231,6 +10234,7 @@
                                             }
                                           }
                                         },
+                                        "userExpense": {},
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -10566,6 +10570,7 @@
                                                           }
                                                         }
                                                       },
+                                                      "userExpense": {},
                                                       "createdAt": {
                                                         "type": "string",
                                                         "format": "date-time"
@@ -11158,6 +11163,7 @@
                                                           }
                                                         }
                                                       },
+                                                      "userExpense": {},
                                                       "createdAt": {
                                                         "type": "string",
                                                         "format": "date-time"
@@ -11783,6 +11789,7 @@
                                                           }
                                                         }
                                                       },
+                                                      "userExpense": {},
                                                       "createdAt": {
                                                         "type": "string",
                                                         "format": "date-time"
@@ -12375,6 +12382,7 @@
                                                           }
                                                         }
                                                       },
+                                                      "userExpense": {},
                                                       "createdAt": {
                                                         "type": "string",
                                                         "format": "date-time"
@@ -12898,7 +12906,8 @@
                   }
                 ],
                 "example": "string or id"
-              }
+              },
+              "userExpense": {}
             }
           }
         }
@@ -13342,6 +13351,7 @@
                                             }
                                           }
                                         },
+                                        "userExpense": {},
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -13439,6 +13449,7 @@
                   }
                 }
               },
+              "userExpense": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -13924,6 +13935,7 @@
                                             }
                                           }
                                         },
+                                        "userExpense": {},
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -14021,6 +14033,7 @@
                   }
                 }
               },
+              "userExpense": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -14539,6 +14552,7 @@
                                             }
                                           }
                                         },
+                                        "userExpense": {},
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -14636,6 +14650,7 @@
                   }
                 }
               },
+              "userExpense": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -15121,6 +15136,7 @@
                                             }
                                           }
                                         },
+                                        "userExpense": {},
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -15218,6 +15234,7 @@
                   }
                 }
               },
+              "userExpense": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -17509,6 +17526,87 @@
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/me": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersPermissionsUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users-permissions - User"
+        ],
+        "parameters": [],
+        "operationId": "post/user/me",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsersPermissionsUserRequest"
               }
             }
           }
