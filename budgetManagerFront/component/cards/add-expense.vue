@@ -13,7 +13,7 @@
 
           <v-select
             v-model="expenseTypeSelected"
-            :items="expenseTypeName"
+            :items="expenseType"
             label="Expense Type"
           ></v-select>
 
@@ -30,44 +30,69 @@
 
 <script>
 import serviceApi from "../../service/Api";
-import store from '../../store/index';
+import moment from "moment";
+import { expenseStore } from "../../stores/expenseStore";
+
+const store = expenseStore();
+
 export default {
   data: () => {
     return {
-      expenseType: [],
+      ExpenseNumber: null,
+      expenseType: store.getExpType,
       expenseTypeName: [],
       expenseTypeSelected: "",
+      userExpenseTmp: [],
     };
   },
 
+  computed: {
+  },
   methods: {
     getExpenseType() {
-      serviceApi.get("/api/expense-types").then((data) => {
-        data.data.data.forEach((item) => {
-          this.expenseTypeName.push(item.attributes.ExpenseType);
-          this.expenseType.push(item);
+      serviceApi
+        .get("/api/users/me", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+          },
+        })
+        .then((data) => {
+          this.userExpenseTmp = data.data.userExpense;
+          console.log(store.getUserExpense);
         });
-      });
     },
 
     submitExpense() {
-      this.expenseType.forEach((item) => {
-        if (this.expenseTypeSelected === item.attributes.ExpenseType) {
-          serviceApi.post("/api/expenses", {
-            data: {
-              Expense: this.ExpenseNumber,
-              expense_type: item.id,
-            },
+      console.log(store.getUserExpense);
+      const date = new Date();
+      if (store.getUserExpense) {
+        store.addExp(this.expenseTypeSelected, parseInt(this.ExpenseNumber));
+        store.userExpense.push({
+          expense: this.ExpenseNumber,
+          expenseType: this.expenseTypeSelected,
+          createdAt: moment(date).format("YYYY-MM-DD")
+        });
+        serviceApi
+          .post(
+            "/api/user/me",
+            { userExpense: store.getUserExpense },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+              },
+            }
+          )
+          .then((res) => {
           });
-        }
-      });
+        this.addExpenseHotReload;
+        this.ExpenseNumber = null;
+        this.expenseTypeSelected = null;
+      }
+      console.log(store.getUserExpense);
     },
   },
   mounted() {
     this.getExpenseType();
-    console.log("avant", store.state.expenseType)
-    store.state.expenseType =  this.expenseTypeName;
-    console.log("apres", store.state.expenseType)
   },
 };
 </script>

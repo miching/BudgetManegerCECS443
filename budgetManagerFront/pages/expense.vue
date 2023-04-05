@@ -1,24 +1,22 @@
 <template>
-  <div class="cardDiv">
     <v-table>
       <thead>
         <tr>
           <th class="text-left">Type</th>
-          <th class="text-left">$</th>
+          <th class="text-left">Expense</th>
           <th class="text-left">Date</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in expenseAll" :key="item.attributes.Expense">
+        <tr v-for="item in expenseAll" :key="item.expense">
           <td>
-            {{ item.attributes.expense_type.data.attributes.ExpenseType }}
+            {{ item.expenseType }}
           </td>
-          <td>{{ item.attributes.Expense }}</td>
-          <td>{{ item.attributes.createdAt }}</td>
+          <td>{{ item.expense }} $</td>
+          <td>{{ item.createdAt }}</td>
         </tr>
       </tbody>
     </v-table>
-  </div>
 </template>
 
 <script>
@@ -32,8 +30,9 @@ export default {
   },
   methods: {
     getExpense() {
-      serviceApi.get("/api/expenses?populate=*").then((data) => {
-        this.expenseAll = data.data.data;
+      serviceApi.get("/api/users/me", {headers: {Authorization: `Bearer ${localStorage.getItem('jwt-token')}`}}).then((data) => {
+        console.log(data);
+        this.expenseAll = data.data.userExpense;
         this.expenseAll.forEach((item) => { 
             console.log(item)
             item.attributes.createdAt = moment().subtract(10, 'days').calendar();

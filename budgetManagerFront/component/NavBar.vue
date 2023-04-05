@@ -33,10 +33,7 @@
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-navigation-drawer
-     mini-variant.sync="testmini"
-      v-model="drawer"
-    >
+    <v-navigation-drawer mini-variant.sync="testmini" v-model="drawer">
       <v-list>
         <v-list-item
           :key="items.value"
@@ -45,6 +42,12 @@
         >
           {{ items.title }}
         </v-list-item>
+        <v-btn
+          @click="handleDisconnect()"
+          style="display: flex; justify-self: flex-end; background-color: red"
+        >
+          Disconnect
+        </v-btn>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -57,6 +60,12 @@ export default {
   methods: {
     handleClickItem(name) {
       navigateTo(`/${name}`);
+    },
+
+    handleDisconnect() {
+      localStorage.setItem('jwt-token', null);
+      console.log(localStorage.getItem('jwt-token'));
+      navigateTo("/");
     },
   },
   data: () => ({

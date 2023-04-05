@@ -7,8 +7,6 @@ module.exports = (plugin) => {
     return sanitizedUser;
   };
   plugin.controllers.user.updateMe = async (ctx) => {
-    console.log("ctx params:", ctx.params.id);
-    console.log("ctx user:", ctx.state.user.id);
     if (!ctx.state.user || !ctx.state.user.id) {
       return ctx.response.status = 401;
     }

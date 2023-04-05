@@ -6,10 +6,9 @@
 
 <script lang="ts">
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "vue-chartjs";
-import { PointElement } from "chart.js";
-import store from "../../store/index";
-
+import { Chart, Doughnut } from "vue-chartjs";
+import { expenseStore } from "../../stores/expenseStore";
+const store = expenseStore();
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default {
@@ -17,29 +16,41 @@ export default {
   components: {
     Doughnut,
   },
-  mounted() {
-    console.log("mounted", store.state.expenseType);
-  },
-  data() {
-    return {
-      expenseType: store.state.expenseType,
-      data: {
-        labels: store.state.expenseType,
+  computed: {
+    data() {
+      return {
+        labels: store.getExpType,
         datasets: [
           {
             label: "My First Dataset",
-            data: [300, 50, 100, 20, 30],
+            data: [
+              store.getExpChilds,
+              store.getExpBank,
+              store.getExpTax,
+              store.getExpHome,
+              store.getExpHobbies,
+              store.getExpTransport,
+              store.getExpHealth,
+            ],
             backgroundColor: [
               "rgb(255, 99, 132)",
               "rgb(54, 162, 235)",
               "rgb(255, 205, 86)",
               "rgb(255, 205, 190)",
+              "rgb(110, 205, 86)",
+              "rgb(90, 10, 86)",
               "rgb(190, 205, 86)",
             ],
             hoverOffset: 4,
           },
         ],
-      },
+      };
+    },
+  },
+  mounted() {},
+  methods: {},
+  data() {
+    return {
       options: {
         responsive: true,
         maintainAspectRatio: false,

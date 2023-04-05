@@ -1,51 +1,49 @@
 <template>
-    <v-table>
-      <thead>
-        <tr>
-          <th class="text-left">Type</th>
-          <th class="text-left">$</th>
-          <th class="text-left">Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in expenseAll" :key="item.attributes.Expense">
-          <td>
-            {{ item.attributes.expense_type.data.attributes.ExpenseType }}
-          </td>
-          <td>{{ item.attributes.Expense }}</td>
-          <td>{{ item.attributes.createdAt }}</td>
-        </tr>
-      </tbody>
-    </v-table>
+  <v-table height="300px">
+    <thead>
+      <tr>
+        <th class="text-left">Expense</th>
+        <th class="text-left">Type</th>
+        <th class="text-left">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="item in userExpenseTest" :key="item">
+        <td>
+          {{ item.expense }}
+        </td>
+        <td>{{ item.expenseType }}</td>
+        <td>{{ item.createdAt }}</td>
+      </tr>
+    </tbody>
+  </v-table>
 </template>
 
 <script>
 import serviceApi from "../../service/Api";
-import moment from "moment"
+import moment from "moment";
+
+import {expenseStore} from '../../stores/expenseStore'
+
+const store = expenseStore();
+
+const storePinia = expenseStore();
 export default {
   data() {
     return {
-      expenseAll: [],
+      expenseAll: store.userExpense,
     };
   },
-  methods: {
-    getExpense() {
-      serviceApi.get("/api/expenses?populate=*").then((data) => {
-        this.expenseAll = data.data.data;
-        this.expenseAll.forEach((item) => { 
-            console.log(item)
-            item.attributes.createdAt = moment().subtract(10, 'days').calendar();
-        })
-        console.log(this.expenseAll);
-      });
+  methods: {},
+  computed: {
+    userExpenseTest() {
+      return store.userExpense.reverse();
     },
   },
   mounted() {
-    this.getExpense();
+    console.log("dispmay pinia", storePinia.getExpType);
   },
 };
 </script>
 
-<style lang="sass">
-
-</style>
+<style lang="sass"></style>

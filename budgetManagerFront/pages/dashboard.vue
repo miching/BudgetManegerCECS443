@@ -23,19 +23,40 @@ import draggable from "vuedraggable";
 import addExpense from "../component/cards/add-expense.vue";
 import displayExpenses from "../component/cards/display-expenses.vue";
 import chartCard from "../component/cards/chart-card.vue";
-import store from "../store/index";
+
+import serviceApi from "../service/Api";
+import { expenseStore } from "../stores/expenseStore";
+
+const store = expenseStore();
 
 export default {
   components: {
     draggable,
     addExpense,
     displayExpenses,
-    chartCard
+    chartCard,
   },
   data: () => {
     return {
+      key: store.expsType,
       drag: false,
     };
+  },
+  methods: {
+  },
+
+  mounted() {
+    serviceApi
+      .get("/api/users/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+        },
+      })
+      .then((data) => {
+        store.userExpense = data.data.userExpense;
+        console.log("store dashboprd expense", store.userExpense);
+        store.calculExpenseType();
+      });
   },
 };
 </script>

@@ -32,8 +32,8 @@
 import { ref } from "vue";
 import { useField, useForm } from "vee-validate";
 import serviceApi from "../service/Api";
-import store from '../store/index'
-
+import { expenseStore } from "../stores/expenseStore";
+const store = expenseStore();
 export default {
   methods: {
     goRegister() {
@@ -72,10 +72,10 @@ export default {
       }).then((response) => {
         console.log("response",response);
         if (response.status = 200) {
-          console.log("jwt avant", store.state.token);
-          store.state.token = response.data.jwt
+          console.log("jwt avant", store.token);
+          store.token = response.data.jwt
           localStorage.setItem("jwt-token", response.data.jwt)
-          console.log("jwt apres", store.state.token);
+          console.log("jwt apres", store.token);
           location.assign('/dashboard');
         }
       }, (error) => {

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <NavBar v-if="token != null"></NavBar>
+      <NavBar v-if="fuckingToken"></NavBar>
       <NuxtPage />
     </v-main>
   </v-app>
@@ -9,14 +9,18 @@
 
 <script>
 import NavBar from "./component/NavBar.vue";
-import store from './store/index'
-
 export default {
+
   components: {
     NavBar,
   },
-  mounted() {
-    console.log(localStorage.getItem('jwt-token'));
+  methods:{
+
+  },
+  computed: {
+    fuckingToken() {
+      return this.token
+    }
   },
   data() {
     return {

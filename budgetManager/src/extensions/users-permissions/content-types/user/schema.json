@@ -65,6 +65,9 @@
     },
     "userExpense": {
       "type": "json"
+    },
+    "userExpenseType": {
+      "type": "json"
     }
   }
 }
