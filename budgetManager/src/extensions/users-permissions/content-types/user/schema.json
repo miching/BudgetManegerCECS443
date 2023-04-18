@@ -64,7 +64,8 @@
       "configurable": false
     },
     "userExpense": {
-      "type": "json"
+      "type": "json",
+      "required": true
     },
     "userExpenseType": {
       "type": "json"
