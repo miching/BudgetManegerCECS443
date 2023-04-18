@@ -83,6 +83,7 @@ export default {
         username: values.username,
         email: values.email,
         password: values.password,
+        userExpense: []
       });
     });
 
