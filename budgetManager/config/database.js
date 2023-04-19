@@ -1,11 +1,22 @@
 const path = require('path');
 
 module.exports = ({ env }) => ({
-  connection: {
-    client: 'sqlite',
-    connection: {
-      filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'mongoose',
+      settings: {
+        client: 'mongodb',
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 27017),
+        database: env('DATABASE_NAME', 'strapi'),
+        username: env('DATABASE_USERNAME', ''),
+        password: env('DATABASE_PASSWORD', ''),
+      },
+      options: {
+        authenticationDatabase: env('AUTHENTICATION_DATABASE', null),
+        ssl: env('DATABASE_SSL', null),
+      },
     },
-    useNullAsDefault: true,
   },
 });
