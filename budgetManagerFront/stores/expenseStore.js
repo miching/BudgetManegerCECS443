@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 export const expenseStore = defineStore('expenseStore', {
     state: () => ({
         token: null,
+        balance: null,
+        totExpense: null,
         totalExpenseChart: [],
         expsType: [
             "Childs",
@@ -62,8 +64,17 @@ export const expenseStore = defineStore('expenseStore', {
         getUserExpense() {
             return this.userExpense;
         },
+        getBalance() {
+            return this.balance;
+        },
+        getTotExpense() {
+            return this.totExpense;
+        }
     },
     actions: {
+        setBalance(number) {
+            this.balance = number;
+        },
         calculExpenseType() {
             this.clearExp();
             this.expsType.forEach((expType) => {

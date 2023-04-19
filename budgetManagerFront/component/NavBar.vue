@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import { useTheme } from "vuetify";
 
 export default {
   methods: {

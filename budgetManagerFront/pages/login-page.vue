@@ -1,29 +1,88 @@
 <template>
-  <div class="mainDiv">
-    <h1>Login</h1>
-    <div class="cardDiv">
-      <v-card>
-        <form @submit.prevent="submit">
-          <v-text-field
-            v-model="username.value.value"
-            :counter="10"
-            :error-messages="username.errorMessage.value"
-            label="Username"
-          ></v-text-field>
+  <div
+    class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+  >
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img
+        class="mx-auto h-10 w-auto"
+        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+        alt="Your Company"
+      />
+      <h2
+        class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
+      >
+        Sign in to your account
+      </h2>
+    </div>
 
-          <v-text-field
-            v-model="password.value.value"
-            :counter="7"
-            :error-messages="password.errorMessage.value"
-            type="password"
-            label="Password"
-          ></v-text-field>
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <form class="space-y-6" @submit.prevent="submit">
+        <div>
+          <label
+            for="username"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >username address</label
+          >
+          <div class="mt-2">
+            <input
+              id="username"
+              v-model="username"
+              name="username"
+              type="username"
+              autocomplete="username"
+              required=""
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
 
-          <v-btn class="me-4" type="submit"> submit </v-btn>
+        <div>
+          <div class="flex items-center justify-between">
+            <label
+              for="password"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Password</label
+            >
+            <div class="text-sm">
+              <a
+                href="#"
+                class="font-semibold text-indigo-600 hover:text-indigo-500"
+                >Forgot password?</a
+              >
+            </div>
+          </div>
+          <div class="mt-2">
+            <input
+              id="password"
+              v-model="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required=""
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
 
-          <v-btn @click="goRegister"> already registered login here </v-btn>
-        </form>
-      </v-card>
+        <div>
+          <button
+            @click="submit"
+            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Sign in
+          </button>
+        </div>
+      </form>
+
+      <p class="mt-10 text-center text-sm text-gray-500">
+        Not a member?
+        {{ " " }}
+        <a
+          href="#"
+          class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >Start a 14 day free trial</a
+        >
+      </p>
     </div>
   </div>
 </template>
@@ -35,55 +94,39 @@ import serviceApi from "../service/Api";
 import { expenseStore } from "../stores/expenseStore";
 const store = expenseStore();
 export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
   methods: {
+    submit() {
+      console.log("register test", this.username);
+      serviceApi
+        .post("/api/auth/local", {
+          identifier: this.username,
+          password: this.password,
+        })
+        .then(
+          (response) => {
+            console.log("response", response);
+            if ((response.status = 200)) {
+              console.log("jwt avant", store.token);
+              store.token = response.data.jwt;
+              localStorage.setItem("jwt-token", response.data.jwt);
+              console.log("jwt apres", store.token);
+              location.assign("/dashboard");
+            }
+          },
+          (error) => {
+            console.log("error", error);
+          }
+        );
+    },
     goRegister() {
       location.assign("/register-page");
     },
-  },
-  setup() {
-    const { handleSubmit, handleReset } = useForm({
-      validationSchema: {
-        username(value) {
-          if (value?.length >= 2) return true;
-
-          return "Name needs to be at least 2 characters.";
-        },
-        password(value) {
-          if (
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/.test(
-              value
-            )
-          )
-            return true;
-          return "Must be a valid password, 1 uppercase letter, 1 lowercase letter, 1 special character.";
-        },
-      },
-    });
-    const username = useField("username");
-    const password = useField("password");
-
-    const items = ref(["Item 1", "Item 2", "Item 3", "Item 4"]);
-
-    const submit = handleSubmit((values) => {
-      console.log("register test", values);
-      serviceApi.post("/api/auth/local", {
-        identifier: values.username,
-        password: values.password,
-      }).then((response) => {
-        console.log("response",response);
-        if (response.status = 200) {
-          console.log("jwt avant", store.token);
-          store.token = response.data.jwt
-          localStorage.setItem("jwt-token", response.data.jwt)
-          console.log("jwt apres", store.token);
-          location.assign('/dashboard');
-        }
-      }, (error) => {
-        console.log("error", error);
-      });
-    });
-
-    return { username, password, items, submit, handleReset };
   },
 };
 </script>
