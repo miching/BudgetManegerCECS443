@@ -22,7 +22,7 @@ export default {
         labels: store.getExpType,
         datasets: [
           {
-            label: "My First Dataset",
+            label: "$",
             data: [
               store.getExpChilds,
               store.getExpBank,
@@ -31,6 +31,7 @@ export default {
               store.getExpHobbies,
               store.getExpTransport,
               store.getExpHealth,
+              store.getExpFood,
             ],
             backgroundColor: [
               "rgb(255, 99, 132)",
@@ -40,6 +41,7 @@ export default {
               "rgb(110, 205, 86)",
               "rgb(90, 10, 86)",
               "rgb(190, 205, 86)",
+              "rgb(40, 22, 86)",
             ],
             hoverOffset: 4,
           },

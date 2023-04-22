@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const expenseStore = defineStore('expenseStore', {
     state: () => ({
         token: null,
-        balance: null,
+        balance: 0,
         totExpense: null,
         totalExpenseChart: [],
         expsType: [
@@ -13,8 +13,10 @@ export const expenseStore = defineStore('expenseStore', {
             "Home",
             "Hobbies",
             "Transport",
-            "Health"
+            "Health",
+            "Food",
         ],
+        user: {},
         userExpense: [],
         expChilds: 0,
         expBank: 0,
@@ -23,6 +25,7 @@ export const expenseStore = defineStore('expenseStore', {
         expHobbies: 0,
         expTransport: 0,
         expHealth: 0,
+        expFood: 0,
         totExpType: [
             { name: "Childs", totalExpense: 0 },
             { name: "Bank", totalExpense: 0 },
@@ -31,6 +34,7 @@ export const expenseStore = defineStore('expenseStore', {
             { name: "Hobbies", totalExpense: 0 },
             { name: "Transport", totalExpense: 0 },
             { name: "Health", totalExpense: 0 },
+            { name: "Food", totalExpense: 0 },
         ]
     }),
     getters: {
@@ -65,10 +69,16 @@ export const expenseStore = defineStore('expenseStore', {
             return this.userExpense;
         },
         getBalance() {
-            return this.balance;
+            return this.user.balance;
         },
         getTotExpense() {
             return this.totExpense;
+        },
+        getExpFood() {
+            return this.expFood;
+        },
+        getUser(){
+            return this.user;
         }
     },
     actions: {

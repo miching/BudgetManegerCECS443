@@ -1,5 +1,6 @@
 <template>
-  <div class="rounded-xl bg-white">
+  <nav-bar></nav-bar>
+  <div class="rounded-xl bg-white shadow-xl shadow-blue-500/50 pt-4 mb-10 w-8/12 mx-auto">
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
@@ -64,7 +65,9 @@
 <script>
 import serviceApi from "../service/Api";
 import moment from "moment";
+import navBar from '~~/component/nav-bar.vue';
 export default {
+  components: { navBar },
   data() {
     return {
       expenseAll: [],
