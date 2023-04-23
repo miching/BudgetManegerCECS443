@@ -10,4 +10,4 @@ Run backend:
   
 Run frontend:
   - Go to BudgetManagerFront
-  - Run: npm i && npm start
+  - Run: npm i && npm run dev
