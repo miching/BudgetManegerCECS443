@@ -4,7 +4,7 @@ export const expenseStore = defineStore('expenseStore', {
     state: () => ({
         token: null,
         balance: 0,
-        totExpense: null,
+        totalExpense: 0,
         totalExpenseChart: [],
         expsType: [
             "Childs",
@@ -72,7 +72,7 @@ export const expenseStore = defineStore('expenseStore', {
             return this.user.balance;
         },
         getTotExpense() {
-            return this.totExpense;
+            return this.totalExpense;
         },
         getExpFood() {
             return this.expFood;
@@ -85,12 +85,17 @@ export const expenseStore = defineStore('expenseStore', {
         setBalance(number) {
             this.balance = number;
         },
+        calculTotalExpense() {
+            this.userExpense.forEach((elem) => {
+                this.totalExpense += parseInt(elem.expense);
+            })
+            console.log(this.totalExpense);
+        },
+
         calculExpenseType() {
             this.clearExp();
             this.expsType.forEach((expType) => {
                 this.userExpense.forEach((expUser) => {
-                    console.log("EXPUSER", expUser);
-                    console.log(expUser.expenseType, expType)
                     if (expUser.expenseType === expType) {
                         this.addExp(expType, parseInt(expUser.expense))
                         //expType.totalExpense += parseInt(expUser.expense);
@@ -98,8 +103,8 @@ export const expenseStore = defineStore('expenseStore', {
                 })
             })
         },
+
         addExp(name, exp) {
-            console.log("calcul =====>", name, exp);
             if (name === 'Childs') {
                 this.expChilds += parseInt(exp);
             }

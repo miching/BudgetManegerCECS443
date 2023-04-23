@@ -30,7 +30,7 @@
             v-if="stat.name !== 'Balance'"
             class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900"
           >
-            {{ stat.value }}
+            {{ stat.value }}$
           </dd>
           <dd
             v-if="stat.name === 'Balance'"
@@ -72,7 +72,7 @@
               V
             </button>
             <div v-if="stat.name === 'Balance' && !editState">
-              {{ stat.value }}
+              {{ balance }}$
             </div>
           </dd>
         </div>
@@ -84,7 +84,7 @@
               <div
                 class="w-3/12 p-2 rounded-lg bg-white shadow-xl shadow-blue-500/50"
               >
-                <add-expense></add-expense>
+                <add-expense :user="user"></add-expense>
               </div>
               <div
                 class="w-auto rounded-lg bg-white shadow-xl shadow-blue-500/50"
@@ -110,6 +110,7 @@ import chartCard from "../component/cards/chart-card.vue";
 import serviceApi from "../service/Api";
 import { expenseStore } from "../stores/expenseStore";
 import navBar from "../component/nav-bar.vue";
+
 const people = {
   name: "Jane Cooper",
   title: "Regional Paradigm Technician",
@@ -122,10 +123,10 @@ const people = {
 
 const store = expenseStore();
 const stats = [
-  { name: "Expenses", value: "800$", change: "", changeType: "positive" },
+  { name: "Expenses", value: store.user.totalExpenses, change: "", changeType: "positive" },
   {
     name: "Balance",
-    value: store.getBalance,
+    value: store.user.Balance,
     change: "",
     changeType: "negative",
   },
@@ -158,7 +159,7 @@ export default {
       key: store.expsType,
       drag: false,
       people,
-      balance: store.getBalance,
+      balance: 0,
     };
   },
   methods: {
@@ -173,8 +174,43 @@ export default {
             },
           }
         )
-        .then((this.balance = store.getBalance));
+        .then((response) => {
+        this.user = response.data;
+        console.log(this.user)
+        store.user.Balance = response.data.Balance;
+      });
     },
+  },
+  
+  computed: {
+    stats() {
+      return [
+        {
+          name: "Expenses",
+          value: store.user.totalExpenses,
+          change: "",
+          changeType: "positive",
+        },
+        {
+          name: "Balance",
+          value: store.user.Balance,
+          change: "",
+          changeType: "negative",
+        },
+        {
+          name: "+/- prev month",
+          value: "$245,988.00",
+          change: "-1.39%",
+          changeType: "positive",
+        },
+        {
+          name: "Rest to balance",
+          value: `$${this.balance}`,
+          change: "+10.18%",
+          changeType: "negative",
+        },
+      ];
+    }
   },
 
   mounted() {
@@ -186,10 +222,12 @@ export default {
       })
       .then((data) => {
         store.user = data.data;
+        this.balance = data.data.Balance;
         console.log("c'est le user", store.getUser);
         store.userExpense = data.data.userExpense;
         console.log("store dashboprd expense", store.userExpense);
         store.calculExpenseType();
+        store.calculTotalExpense();
       });
   },
 };
