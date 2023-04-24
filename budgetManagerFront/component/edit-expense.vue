@@ -1,8 +1,12 @@
 <template>
   <div>
-    <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Expense</label>
+    <label for="price" class="block text-sm font-medium leading-6 text-gray-900"
+      >Expense</label
+    >
     <div class="relative mt-2 rounded-md shadow-sm">
-      <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+      <div
+        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+      >
         <span class="text-gray-500 sm:text-sm">$</span>
       </div>
       <input
@@ -14,7 +18,9 @@
         placeholder="0.00"
         aria-describedby="price-currency"
       />
-      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+      <div
+        class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
+      >
         <span class="text-gray-500 sm:text-sm" id="price-currency">USD</span>
       </div>
     </div>
@@ -30,22 +36,32 @@
         <option v-for="items in expenseType" :key="items">{{ items }}</option>
       </select>
     </div>
-    <button
-      type="button"
-      @click="submitExpense"
-      :disabled="isSubmitDisabled"
-      class="w-full mt-10 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-    >
-      Validate
-    </button>
+    <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+      <button
+        type="button"
+        class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+        @click="openEdit = false"
+        :disabled="isSubmitDisabled"
+      >
+        Edit
+      </button>
+      <button
+        type="button"
+        class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+        @click="openEdit = false"
+        ref="cancelButtonRef"
+      >
+        Cancel
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import serviceApi from "../../service/Api";
+import serviceApi from "../service/Api";
 import moment from "moment";
-import { expenseStore } from "../../stores/expenseStore";
-import { storeToRefs } from 'pinia';
+import { expenseStore } from "../stores/expenseStore";
+import { storeToRefs } from "pinia";
 
 const store = expenseStore();
 
@@ -64,7 +80,7 @@ export default {
   computed: {
     isSubmitDisabled() {
       return !this.ExpenseNumber || !this.expenseTypeSelected;
-    }
+    },
   },
 
   methods: {
@@ -94,7 +110,11 @@ export default {
         serviceApi
           .post(
             "/api/user/me",
-            { userExpense: store.getUserExpense, totalExpenses: store.getTotExpense, todayExpenses: store.getTodayExpenses},
+            {
+              userExpense: store.getUserExpense,
+              totalExpenses: store.getTotExpense,
+              todayExpenses: store.getTodayExpenses,
+            },
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
@@ -103,7 +123,6 @@ export default {
           )
           .then((res) => {
             store.user.totalExpenses = res.data.totalExpenses;
-            
           });
         this.addExpenseHotReload;
         this.ExpenseNumber = null;

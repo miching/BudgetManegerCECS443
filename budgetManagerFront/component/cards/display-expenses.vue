@@ -72,7 +72,7 @@ export default {
   methods: {},
   computed: {
     userExpenseTest() {
-      return store.userExpense.reverse();
+      return store.userExpense;
     },
   },
   mounted() {

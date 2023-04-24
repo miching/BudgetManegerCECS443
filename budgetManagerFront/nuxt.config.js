@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { createPinia } from 'pinia'
+
 export default defineNuxtConfig({
+  
   modules: ["@nuxtjs/strapi", "@nuxtjs/color-mode", '@pinia/nuxt','@nuxtjs/tailwindcss'],
   router: {
     middleware: ['auth']

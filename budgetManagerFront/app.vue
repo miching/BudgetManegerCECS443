@@ -31,6 +31,7 @@ const userNavigation = [
   { name: "Sign out", href: "#" },
 ];
 export default {
+  middleware: 'auth',
   components: {
     Disclosure,
     DisclosureButton,
@@ -45,7 +46,7 @@ export default {
   },
   methods: {},
   computed: {
-    fuckingToken() {
+    jwtToken() {
       return this.token;
     },
   },

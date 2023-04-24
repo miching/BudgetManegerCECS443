@@ -32,6 +32,8 @@ export default {
               store.getExpTransport,
               store.getExpHealth,
               store.getExpFood,
+              store.getExpMiscellaneous,
+              store.getExpAuto
             ],
             backgroundColor: [
               "rgb(255, 99, 132)",
@@ -42,6 +44,8 @@ export default {
               "rgb(90, 10, 86)",
               "rgb(190, 205, 86)",
               "rgb(40, 22, 86)",
+              "rgb(100, 100, 86)",
+              "rgb(100, 150, 1)",
             ],
             hoverOffset: 4,
           },

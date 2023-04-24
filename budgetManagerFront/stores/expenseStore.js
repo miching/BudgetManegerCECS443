@@ -1,11 +1,14 @@
 import { defineStore } from "pinia";
+import moment from "moment";
 
 export const expenseStore = defineStore('expenseStore', {
     state: () => ({
         token: null,
+        openEdit: false,
         balance: 0,
         totalExpense: 0,
         totalExpenseChart: [],
+        spentToday: 0,
         expsType: [
             "Childs",
             "Bank",
@@ -15,6 +18,8 @@ export const expenseStore = defineStore('expenseStore', {
             "Transport",
             "Health",
             "Food",
+            "Miscellaneous",
+            "Auto"
         ],
         user: {},
         userExpense: [],
@@ -26,6 +31,8 @@ export const expenseStore = defineStore('expenseStore', {
         expTransport: 0,
         expHealth: 0,
         expFood: 0,
+        expMiscellaneous: 0,
+        expAuto: 0,
         totExpType: [
             { name: "Childs", totalExpense: 0 },
             { name: "Bank", totalExpense: 0 },
@@ -35,9 +42,14 @@ export const expenseStore = defineStore('expenseStore', {
             { name: "Transport", totalExpense: 0 },
             { name: "Health", totalExpense: 0 },
             { name: "Food", totalExpense: 0 },
+            { name: "Miscellaneous", totalExpense: 0 },
+            { name: "Auto", totalExpense: 0 },
         ]
     }),
     getters: {
+        getToken() {
+            return this.token;
+        },
         getExpType() {
             return this.expsType;
         },
@@ -77,8 +89,17 @@ export const expenseStore = defineStore('expenseStore', {
         getExpFood() {
             return this.expFood;
         },
-        getUser(){
+        getUser() {
             return this.user;
+        },
+        getTodayExpenses() {
+            return this.spentToday;
+        },
+        getExpMiscellaneous() {
+            return this.expMiscellaneous;
+        },
+        getExpAuto() {
+            return this.expAuto;
         }
     },
     actions: {
@@ -86,8 +107,14 @@ export const expenseStore = defineStore('expenseStore', {
             this.balance = number;
         },
         calculTotalExpense() {
+            const date = new Date();
+            this.totalExpense = 0;
             this.userExpense.forEach((elem) => {
                 this.totalExpense += parseInt(elem.expense);
+                if (elem.createdAt.split(' ')[0] === moment(date).format("YYYY-MM-DD")) {
+                    this.spentToday += parseInt(elem.expense);
+                    console.log(elem, this.spentToday);
+                }
             })
             console.log(this.totalExpense);
         },
@@ -126,6 +153,15 @@ export const expenseStore = defineStore('expenseStore', {
             if (name === 'Health') {
                 this.expHealth += parseInt(exp);
             }
+            if (name === 'Food') {
+                this.expFood += parseInt(exp);
+            }
+            if (name === 'Miscellaneous') {
+                this.expMiscellaneous += parseInt(exp);
+            }
+            if (name === 'Auto') {
+                this.expAuto += parseInt(exp);
+            }
         },
         clearExp() {
             this.expChilds = 0;
@@ -135,6 +171,9 @@ export const expenseStore = defineStore('expenseStore', {
             this.expHobbies = 0;
             this.expTransport = 0;
             this.expHealth = 0;
+            this.expFood = 0;
+            this.expMiscellaneous = 0;
+            this.expAuto = 0;
         }
     },
 })

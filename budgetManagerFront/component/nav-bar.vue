@@ -8,8 +8,8 @@
               <div class="flex items-center">
                 <div class="flex-shrink-0">
                   <img
-                    class="h-8 w-8"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    class="h-16 w-16"
+                    src="https://ht.vnmod.net/wp-content/uploads/2022/06/110620221654933540.png"
                     alt="Your Company"
                   />
                 </div>
@@ -35,6 +35,7 @@
                 <div class="ml-4 flex items-center md:ml-6">
                   <button
                     type="button"
+                    @click="showNotif"
                     class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span class="sr-only">View notifications</span>
@@ -73,6 +74,7 @@
                         >
                           <a
                             :href="item.href"
+                            @click="item.action()"
                             :class="[
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-gray-700',
@@ -96,11 +98,7 @@
                     class="block h-6 w-6"
                     aria-hidden="true"
                   />
-                  <XMarkIcon
-                    v-else
-                    class="block h-6 w-6"
-                    aria-hidden="true"
-                  />
+                  <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
                 </DisclosureButton>
               </div>
             </div>
@@ -144,6 +142,7 @@
               </div>
               <button
                 type="button"
+                @click="showNotif"
                 class="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               >
                 <span class="sr-only">View notifications</span>
@@ -164,9 +163,9 @@
         </DisclosurePanel>
       </Disclosure>
       <header class="py-10">
-        <div class="mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 class="text-3xl font-bold tracking-tight text-white">
-            {{this.path}}
+            {{ this.path }}
           </h1>
         </div>
       </header>
@@ -182,35 +181,6 @@
 
 <script>
 import {
-Disclosure,
-DisclosureButton,
-DisclosurePanel,
-Menu,
-MenuButton,
-MenuItem,
-MenuItems,
-} from "@headlessui/vue";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-
-const user = {
-name: "Tom Cook",
-email: "tom@example.com",
-imageUrl:
-  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
-const navigation = [
-{ name: "Dashboard", href: "dashboard", current: false },
-{ name: "Expense", href: "expense", current: false },
-{ name: "Settings", href: "settings", current: false },
-];
-const userNavigation = [
-{ name: "Your Profile", href: "#" },
-{ name: "Settings", href: "#" },
-{ name: "Sign out", href: "#" },
-];
-
-export default {
-components: {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -218,24 +188,64 @@ components: {
   MenuButton,
   MenuItem,
   MenuItems,
-  Bars3Icon,
-  BellIcon,
-  XMarkIcon,
-},
-methods: {},
-computed: {
-  fuckingToken() {
-    return this.token;
+} from "@headlessui/vue";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+
+const user = {
+  name: "Tom Cook",
+  email: "tom@example.com",
+  imageUrl: "https://i.imgflip.com/4/6wl6d6.jpg",
+};
+const navigation = [
+  { name: "Dashboard", href: "dashboard", current: false },
+  { name: "Expense", href: "expense", current: false },
+  { name: "Settings", href: "settings", current: false },
+];
+
+export default {
+  components: {
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
+    Bars3Icon,
+    BellIcon,
+    XMarkIcon,
   },
-},
-data() {
-  return {
-    token: localStorage.getItem("jwt-token"),
-    user,
-    userNavigation,
-    navigation,
-    path: location.href.split('/')[3].toUpperCase()
-  };
-},
+  methods: {
+    handleSignout() {
+      console.log("deconnetion");
+      const authCookie = useCookie("auth");
+      authCookie.value = null;
+    },
+    showNotif() {
+      this.show = true;
+      console.log("bonjour---------------------------------___>");
+    },
+  },
+  computed: {
+    jwtToken() {
+      return this.token;
+    },
+  },
+  data() {
+    const userNavigation = [
+      { name: "Your Profile", href: "#" },
+      { name: "Settings", href: "#" },
+      { name: "Sign out", href: "/login-page", action: this.handleSignout() },
+    ]
+    return {
+      userNavigation,
+      token: localStorage.getItem("jwt-token"),
+      user,
+      userNavigation,
+      navigation,
+      path: location.href.split("/")[3].toUpperCase(),
+      show: false,
+    };
+  },
 };
 </script>
