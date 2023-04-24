@@ -34,7 +34,7 @@
                 type="username"
                 autocomplete="username"
                 required=""
-                pattern="[A-Za-z0-9_]{3,20}"
+                pattern="[A-Za-z0-9_*-+=@]{3,20}"
                 title="Username should be alphanumeric with minimum 3 and maximum 20 characters."
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -121,11 +121,14 @@ export default {
         })
         .then(
           (response) => {
-            console.log("jwt avant", store.token);
-            console.log("jwt avant", store.expHealth);
             Cookies.set("jwtToken", response.data.jwt, { expires: 7 });
-            console.log("jwt apres", Cookies.get("jwtToken"));
-            navigateTo("/dashboard");
+            localStorage.setItem("jwt-token", response.data.token);
+            store.token = response.data.jwt;
+            console.log("localtoken",localStorage.getItem("jwt-token"))
+            setTimeout(() => {
+
+              navigateTo("/dashboard");
+            }, 1000);
           },
           (error) => {
             console.log("error", error);

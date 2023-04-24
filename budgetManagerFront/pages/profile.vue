@@ -84,7 +84,7 @@ export default {
     serviceApi
       .get(`/api/users/me`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+          Authorization: `Bearer ${store.token}`,
         },
       })
       .then((res) => {

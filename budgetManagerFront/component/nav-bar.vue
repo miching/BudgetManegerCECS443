@@ -218,8 +218,7 @@ export default {
   methods: {
     handleSignout() {
       console.log("deconnetion");
-      const authCookie = useCookie("auth");
-      authCookie.value = null;
+    
     },
     showNotif() {
       this.show = true;
@@ -235,7 +234,7 @@ export default {
     const userNavigation = [
       { name: "Your Profile", href: "#" },
       { name: "Settings", href: "#" },
-      { name: "Sign out", href: "/login-page", action: this.handleSignout() },
+      { name: "Sign out", href: "/login-page"},
     ]
     return {
       userNavigation,

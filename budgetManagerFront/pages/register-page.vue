@@ -130,7 +130,7 @@ export default {
           email: this.email,
           password: this.password,
           userExpense: [],
-          todayExpense: 1,
+          todayExpense: 0,
         })
         .then(
           (response) => {

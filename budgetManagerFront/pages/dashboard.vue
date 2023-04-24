@@ -208,7 +208,7 @@ export default {
           { Balance: this.balance },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+              Authorization: `Bearer ${store.token}`,
             },
           }
         )
@@ -272,13 +272,15 @@ export default {
     },
   },
 
-  mounted() {
+  created() {
     console.log(store.spentToday);
-    console.log(store.getToken)
+    console.log("fucking token", store.token)
+    console.log("fucking token", store.token)
+
     serviceApi
       .get("/api/users/me", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+          Authorization: `Bearer ${store.token}`,
         },
       })
       .then((data) => {

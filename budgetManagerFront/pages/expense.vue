@@ -109,6 +109,9 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import EditExpense from "../component/edit-expense.vue";
+import { expenseStore } from "~~/stores/expenseStore";
+
+const store = expenseStore();
 
 export default {
   components: {
@@ -141,7 +144,7 @@ export default {
       serviceApi
         .get("/api/users/me", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+            Authorization: `Bearer ${store.token}`,
           },
         })
         .then((data) => {

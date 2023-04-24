@@ -1,9 +1,11 @@
 import { defineStore } from "pinia";
 import moment from "moment";
+import Cookies from "js-cookie";
+
 
 export const expenseStore = defineStore('expenseStore', {
     state: () => ({
-        token: null,
+        token: Cookies.get("jwtToken"),
         openEdit: false,
         balance: 0,
         totalExpense: 0,
