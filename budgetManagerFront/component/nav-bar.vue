@@ -174,6 +174,7 @@
     <main class="-mt-32 h-full">
       <div class="mx-auto h-full max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
         <!-- Your content -->
+        <NuxtPage />
       </div>
     </main>
   </div>
@@ -216,9 +217,7 @@ export default {
     XMarkIcon,
   },
   methods: {
-    handleSignout() {
-    
-    },
+    handleSignout() {},
     showNotif() {
       this.show = true;
     },
@@ -232,8 +231,8 @@ export default {
     const userNavigation = [
       { name: "Your Profile", href: "#" },
       { name: "Settings", href: "#" },
-      { name: "Sign out", href: "/login-page"},
-    ]
+      { name: "Sign out", href: "/login-page" },
+    ];
     return {
       userNavigation,
       token: localStorage.getItem("jwt-token"),

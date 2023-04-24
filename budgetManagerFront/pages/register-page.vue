@@ -98,7 +98,7 @@
                   />
                 </svg>
               </span>
-              Sign in
+              Register
             </button>
           </div>
         </form>

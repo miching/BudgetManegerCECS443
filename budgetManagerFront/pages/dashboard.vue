@@ -271,7 +271,6 @@ export default {
   },
 
   created() {
-
     serviceApi
       .get("/api/users/me", {
         headers: {
