@@ -162,6 +162,7 @@ import notifications from "../component/notifications.vue";
 import { ref } from "vue";
 import { CheckCircleIcon } from "@heroicons/vue/24/outline";
 import { ExclamationCircleIcon, XMarkIcon } from "@heroicons/vue/20/solid";
+import Cookies from 'js-cookie'
 
 const people = {
   name: "Jane Cooper",
