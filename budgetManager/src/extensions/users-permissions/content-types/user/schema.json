@@ -69,6 +69,19 @@
     },
     "userExpenseType": {
       "type": "json"
+    },
+    "Balance": {
+      "type": "integer",
+      "default": 0
+    },
+    "totalExpenses": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "todayExpenses": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
