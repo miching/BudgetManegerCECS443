@@ -76,7 +76,6 @@ export default {
     },
   },
   mounted() {
-    console.log("dispmay pinia", storePinia.getExpType);
   },
 };
 </script>

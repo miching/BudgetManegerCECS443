@@ -217,12 +217,10 @@ export default {
   },
   methods: {
     handleSignout() {
-      console.log("deconnetion");
     
     },
     showNotif() {
       this.show = true;
-      console.log("bonjour---------------------------------___>");
     },
   },
   computed: {

@@ -33,7 +33,6 @@ const store = createStore({
                 state.userExpense.forEach((expUser) => {
                     if (expUser.expense === expType) {
                         expType.totalExpense += expUser.expense;
-                        console.log("total expense ====>", expType);
                     }
                 })
             })

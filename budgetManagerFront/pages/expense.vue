@@ -148,15 +148,12 @@ export default {
           },
         })
         .then((data) => {
-          console.log(data);
           this.expenseAll = data.data.userExpense;
           this.expenseAll.forEach((item) => {
-            console.log(item);
             item.attributes.createdAt = moment()
               .subtract(10, "days")
               .calendar();
           });
-          console.log(this.expenseAll);
         });
     },
   },

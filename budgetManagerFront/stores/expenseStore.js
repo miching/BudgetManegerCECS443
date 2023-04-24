@@ -115,10 +115,8 @@ export const expenseStore = defineStore('expenseStore', {
                 this.totalExpense += parseInt(elem.expense);
                 if (elem.createdAt.split(' ')[0] === moment(date).format("YYYY-MM-DD")) {
                     this.spentToday += parseInt(elem.expense);
-                    console.log(elem, this.spentToday);
                 }
             })
-            console.log(this.totalExpense);
         },
 
         calculExpenseType() {

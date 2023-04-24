@@ -215,7 +215,7 @@ export default {
         )
         .then((response) => {
           this.user = response.data;
-          console.log(this.user);
+          (this.user);
           store.user.Balance = response.data.Balance;
         });
     },
@@ -259,10 +259,7 @@ export default {
             )
           : "N/A";
       if (parseInt(res) >= 80) {
-        console.log(parseInt(res));
-        console.log(this.show);
         this.show = true;
-        console.log(this.show);
       } else {
         this.show = false;
       }
@@ -274,9 +271,6 @@ export default {
   },
 
   created() {
-    console.log(store.spentToday);
-    console.log("fucking token", store.token)
-    console.log("fucking token", store.token)
 
     serviceApi
       .get("/api/users/me", {
@@ -287,9 +281,7 @@ export default {
       .then((data) => {
         store.user = data.data;
         this.balance = data.data.Balance;
-        console.log("c'est le user", store.getUser);
         store.userExpense = data.data.userExpense;
-        console.log("store dashboprd expense", store.userExpense);
         store.calculExpenseType();
         store.calculTotalExpense();
       });

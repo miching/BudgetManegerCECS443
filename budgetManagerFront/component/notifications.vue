@@ -66,7 +66,6 @@ export default {
   },
   methods:{
     showTest() {
-        console.log(this.show);
     } 
   },
 

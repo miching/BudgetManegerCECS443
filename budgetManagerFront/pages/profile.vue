@@ -61,7 +61,6 @@ export default {
     const email = useField("email");
 
     const submit = handleSubmit((values) => {
-      console.log(localStorage.getItem("jwt-token"));
       serviceApi
         .post(`/api/user/me`, values, {
           headers: {
@@ -70,9 +69,7 @@ export default {
         })
         .then((res) => {
           if (res.status === 200) {
-            console.log("snackbar avant", snackbar)
             snackbar = ref(true);
-            console.log("snackbar apres", snackbar)
           }
         });
     });
@@ -89,7 +86,6 @@ export default {
       })
       .then((res) => {
         this.user = res.data;
-        console.log(this.user);
       });
   },
   data() {
